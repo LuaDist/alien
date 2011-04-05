@@ -1,46 +1,49 @@
-# Copyright (C) 2007-2009 LuaDist.
+# Copyright (C) 2007-2011 LuaDist.
 # Created by Peter Kapec
 # Redistribution and use of this file is allowed according to the terms of the MIT license.
 # For details see the COPYRIGHT file distributed with LuaDist.
 # Please note that the package source code is licensed under its own license.
 
-PROJECT (alien C)
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
-INCLUDE(dist.cmake)
+project ( alien C )
+cmake_minimum_required ( VERSION 2.6 )
+include ( dist.cmake )
 
-# We need Lua to compile
-FIND_PACKAGE (Lua51 REQUIRED)
-INCLUDE_DIRECTORIES( ${LUA_INCLUDE_DIR})
-
-IF(WIN32)
-	ADD_DEFINITIONS(-DWINDOWS)
-	IF(MSVC)
-		ADD_DEFINITIONS(-D_MSC_VER)
-	ENDIF(MSVC)
-ELSEIF(UNIX)
-	ADD_DEFINITIONS(-DLINUX)
-ELSEIF(APPLE)
-	ADD_DEFINITIONS(-DDARWIN)
-ENDIF()
+if ( WIN32 )
+ 	add_definitions ( -DWINDOWS )
+	if ( MSVC )
+		add_definitions ( -D_MSC_VER )
+	endif ()
+elseif ( UNIX )
+	add_definitions ( -DLINUX )
+elseif ( APPLE )
+	add_definitions( -DDARWIN )
+endif ()
 
 # Find LibFFI
-FIND_PATH(FFI_INCLUDE_DIR NAMES ffi.h 
+find_path ( FFI_INCLUDE_DIR NAMES ffi.h 
 	PATHS /usr/include/x86_64-linux-gnu/		# Ubuntu 9.10 - libffi-dev 3.0.1
 	          /usr/include/i686-linux-gnu/                    # Ubuntu x86 9.10 - libffi-dev
 )
-INCLUDE_DIRECTORIES (${FFI_INCLUDE_DIR})
-FIND_LIBRARY(FFI_LIBRARY NAMES ffi)
+include_directories ( ${FFI_INCLUDE_DIR} )
+find_library ( FFI_LIBRARY NAMES ffi )
 
-# Build modules
-ADD_LUA_MODULE(core src/alien/core.c ${LIBFFI_SRC})
-ADD_LUA_MODULE(struct src/alien/struct.c )
-TARGET_LINK_LIBRARIES(core ${FFI_LIBRARY})
+install_lua_module ( alien.core src/alien/core.c )
+install_lua_module ( alien.struct src/alien/struct.c )
+target_link_libraries ( alien_core ${FFI_LIBRARY} )
+install_lua_module ( alien src/alien.lua )
+install_doc ( doc/ )
+install_example ( samples/ )
+install_test ( tests/test_alien.lua )
 
-# Install all files and documentation
-INSTALL(FILES src/alien.lua DESTINATION ${INSTALL_LMOD})
-INSTALL(TARGETS core struct  DESTINATION ${INSTALL_CMOD}/alien)
+# Testing....
 
-INSTALL(DIRECTORY doc/ DESTINATION ${INSTALL_DOC})
-INSTALL(DIRECTORY samples/ DESTINATION ${INSTALL_EXAMPLE})
+# IMPROVE: integrate into dist.cmake?
+add_custom_command ( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/alien.lua
+  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/src/alien.lua ${CMAKE_CURRENT_BINARY_DIR}/alien.lua
+  DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/src/alien.lua )
+add_custom_target ( copy_alien ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/alien.lua )
 
-INSTALL(FILES tests/test_alien.lua DESTINATION ${INSTALL_TEST})
+add_library ( alientest SHARED ../tests/alientest.c )
+
+add_lua_test ( tests/test_alien.lua )
+
