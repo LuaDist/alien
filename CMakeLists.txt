@@ -26,6 +26,7 @@ ENDIF()
 # Find LibFFI
 FIND_PATH(FFI_INCLUDE_DIR NAMES ffi.h 
 	PATHS /usr/include/x86_64-linux-gnu/		# Ubuntu 9.10 - libffi-dev 3.0.1
+	          /usr/include/i686-linux-gnu/                    # Ubuntu x86 9.10 - libffi-dev
 )
 INCLUDE_DIRECTORIES (${FFI_INCLUDE_DIR})
 FIND_LIBRARY(FFI_LIBRARY NAMES ffi)
