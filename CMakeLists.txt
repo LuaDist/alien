@@ -19,6 +19,8 @@ elseif ( APPLE )
 	add_definitions( -DDARWIN )
 endif ()
 
+set (CMAKE_C_FLAGS "-bundle -undefined dynamic_lookup")
+
 # Find LibFFI
 find_package( FFI REQUIRED )
 include_directories ( ${FFI_INCLUDE_DIR} )
