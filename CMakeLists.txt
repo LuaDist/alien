@@ -19,7 +19,9 @@ elseif ( APPLE )
 	add_definitions( -DDARWIN )
 endif ()
 
-set (CMAKE_C_FLAGS "-bundle -undefined dynamic_lookup")
+if (APPLE)
+	set (CMAKE_C_FLAGS "-bundle -undefined dynamic_lookup")
+endif()
 
 # Find LibFFI
 find_package( FFI REQUIRED )
