@@ -21,6 +21,8 @@ endif ()
 
 if (APPLE)
 	set (CMAKE_C_FLAGS "-bundle -undefined dynamic_lookup")
+elseif(UNIX)
+	set (CMAKE_C_FLAGS "-fno-stack-protector")
 endif()
 
 # Find LibFFI

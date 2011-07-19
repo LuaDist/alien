@@ -5,7 +5,7 @@
 #  FFI_LIBRARIES - The libraries needed to use LibFFI
 #  FFI_DEFINITIONS - Compiler switches required for using LibFFI
 
-find_path(FFI_INCLUDE_DIR ffi.h ffi/ffi.h )
+find_path(FFI_INCLUDE_DIR ffi.h ffi/ffi.h PATHS /usr/include/x86_64-linux-gnu/)
 find_library(FFI_LIBRARY NAMES ffi libffi)
 
 set(FFI_LIBRARIES ${FFI_LIBRARY} )

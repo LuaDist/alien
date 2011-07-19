@@ -1,4 +1,4 @@
-require "luarocks.require"
+
 require "alien"
 
 local gtk,p,i=alien.load("/usr/lib/libgtk-x11-2.0.so.0"),"pointer","int"
