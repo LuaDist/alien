@@ -6,7 +6,8 @@
 
 project ( alien C )
 cmake_minimum_required ( VERSION 2.6 )
-include ( dist.cmake )
+include ( cmake/dist.cmake )
+include ( lua )
 
 if ( WIN32 )
  	add_definitions ( -DWINDOWS )
