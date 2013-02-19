@@ -28,7 +28,7 @@ endif ( )
 
 # Find LibFFI
 find_package ( FFI REQUIRED )
-include_directories ( ${CMAKE_CURRENT_SOURCE_DIR} ${FFI_INCLUDE_DIR} )
+include_directories ( ${CMAKE_CURRENT_SOURCE_DIR} ${FFI_INCLUDE_DIRS} )
 
 install_lua_module ( alien_c src/alien.c LINK ${FFI_LIBRARY} )
 install_lua_module ( alien src/alien.lua )
