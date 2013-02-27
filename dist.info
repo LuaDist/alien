@@ -1,0 +1,40 @@
+type = "x86_64"
+arch = "Ubuntu"
+author = "Fabio Mascarenhas"
+depends = {
+[[lua ~> 5.1]],
+[[libffi >=1.0]],
+}
+
+desc = "Alien - Pure Lua extensions."
+version = "0.7.0"
+maintainer = "Peter Kapec"
+files = {
+Runtime = {
+[[lib/lua/alien_c.so]],
+[[lib/lua/alien.lua]],
+}
+,
+Documentation = {
+[[share/alien/doc//Makefile.am]],
+[[share/alien/doc//alien.md]],
+[[share/alien/doc//.gitignore]],
+}
+,
+Example = {
+[[share/alien/example//Makefile.am]],
+[[share/alien/example//libc.lua]],
+[[share/alien/example//gtk.lua]],
+[[share/alien/example//string_array.lua]],
+}
+,
+Test = {
+[[share/alien/test/libalientest.so]],
+[[share/alien/test/test_alien.lua]],
+}
+,
+}
+
+license = "MIT"
+url = "http://alien.luaforge.net"
+name = "alien"
